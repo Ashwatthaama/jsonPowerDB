@@ -145,6 +145,62 @@
         jQuery.ajaxSetup({ async: true });
         resetForm();
       }
+      
+      
+        function registerCandidate() {
+
+            var jsonStr = validateAndGetFormData();
+            if (jsonStr === "") {
+                return;
+            }
+            var putReqStr = createPUTRequest("90935330|-31948798561083333|90934481",jsonStr, "PROJECT", "STD-DATA");
+            alert(putReqStr);
+            jQuery.ajaxSetup({async: false});
+            var resultObj = executeCommand(putReqStr,
+                    "http://api.login2explore.com:5577", "/api/iml");
+            jQuery.ajaxSetup({async: true});
+            alert( "VALUES INSERTED "+ JSON.stringify(resultObj));
+            document.getElementById("myForm").reset();
+}
+
+       function deleteData(){
+            var token = "90935576|-31948842177875838|90933701";
+            var dbname = "PROJECT";
+            var relationName = "STD-DATA";
+            var recordid = parseInt(document.getElementById("recordid").value);
+
+            var reqString = createREMOVERecordRequest(token, dbname, relationName, recordid );
+            alert(reqString);
+            
+            jQuery.ajaxSetup({async: false});
+            var resultObj = executeCommand(reqString,
+                    "http://api.login2explore.com:5577", "/api/iml");
+            jQuery.ajaxSetup({async: true});
+            alert( "VALUE DELETED"+ JSON.stringify(resultObj));
+            
+        }
+      
+        function updateData(){
+            var token = "90935576|-31948842177875838|90933701";
+            var dbname = "PROJECT";
+            var relationName = "STD-DATA";
+            var recordid = document.getElementById("recordid").value;
+            var mobileno = document.getElementById("mobileno").value;
+            
+            var jsonStr = {
+                MobileNo : mobileno
+            };
+            var reqString = createUPDATERecordRequest(token, JSON.stringify(jsonStr), dbname, relationName, recordid);
+            alert(reqString);
+            jQuery.ajaxSetup({async: false});
+            var resultObj = executeCommand(reqString,
+                    "http://api.login2explore.com:5577", "/api/iml");
+            jQuery.ajaxSetup({async: true});
+            alert(JSON.stringify(resultObj));
+            
+        }
+      
+      
     </script>
   </body>
 </html>
